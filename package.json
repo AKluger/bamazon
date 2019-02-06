@@ -1,0 +1,24 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "A virtual store exhibiting inventory tracking and dynamic updates from user input",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKluger/bamazon.git"
+  },
+  "author": "AKluger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKluger/bamazon/issues"
+  },
+  "homepage": "https://github.com/AKluger/bamazon#readme"
+}
