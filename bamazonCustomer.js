@@ -12,43 +12,57 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
+connection.connect(function(err) {
+    if (err) throw err;
+    // run the showProducts function after the connection is made to prompt the user
+    showProducts();
+  });
 
-function showProducts()  {
+function showProducts() {
     console.log("Displaying All Products....");
-    connection.query("SELECT item_id, product_name, price FROM products ", function(err, res)  {
+    connection.query("SELECT item_id, product_name, price FROM products ", function (err, res) {
         if (err) throw err;
 
         console.log(res);
         connection.end();
+       
     });
 
+    
+
 }
+// bamazonShop();
 
+function bamazonShop() {
+  
+        inquirer.prompt([
 
-function bamazonShop()  {
-    showProducts();
-    connection.query("SELECT price FROM products", function(err, res)  {
-        if (err) throw err;
-    inquirer.prompt([
+            {
+                type: "input",
+                name: "id",
+                message: "Please enter the item-id of the product you would like to buy:"
+            }
 
-        {
-            type: "input",
-            name: "id",
-            message: "Please enter the item-id of the product you would like to buy:"
-        },
+            // {
+            //     type: "input",
+            //     name: "quantity",
+            //     message: "Please enter a quantity for purchase:"
+            // }
+        ])
+            .then(function (answer) {
+                
+                // if (answer.quantity>())   {
+                //     console.log(inquirerResponse.)
+                // }
+                connection.query("SELECT * FROM products WHERE ?",
+                    {
+                        item_id : answer.id},
+                    function (err, res) {
+                        if (err) throw err;
+                        console.log(res);   
+                         connection.end();
+                 })
+             })
+        }
 
-        {type: "input",
-        name: "quantity",
-        message: "Please enter a quantity for purchase:"}
-    ])
-    .then(function(answer)    {
-        console.log(res[1].stock_quantity)
-        // if (answer.quantity>())   {
-        //     console.log(inquirerResponse.)
-        // }
-        connection.end();
-    })
-})
-}
-
-bamazonShop();
+// bamazonShop();
