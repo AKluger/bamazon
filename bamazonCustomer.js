@@ -24,14 +24,15 @@ function showProducts() {
         if (err) throw err;
 
         console.log(res);
-        connection.end();
+        bamazonShop();
+        // connection.end();
        
     });
 
     
 
 }
-// bamazonShop();
+
 
 function bamazonShop() {
   
@@ -41,26 +42,26 @@ function bamazonShop() {
                 type: "input",
                 name: "id",
                 message: "Please enter the item-id of the product you would like to buy:"
-            }
+            },
 
-            // {
-            //     type: "input",
-            //     name: "quantity",
-            //     message: "Please enter a quantity for purchase:"
-            // }
+            {
+                type: "input",
+                name: "quantity",
+                message: "Please enter a quantity for purchase:"
+            }
         ])
             .then(function (answer) {
                 
-                // if (answer.quantity>())   {
-                //     console.log(inquirerResponse.)
-                // }
+               
                 connection.query("SELECT * FROM products WHERE ?",
                     {
                         item_id : answer.id},
                     function (err, res) {
                         if (err) throw err;
-                        console.log(res);   
+                        // if (answer.quantity > res.stock_quantity) {
+                        console.log(res.stock_quantity);   
                          connection.end();
+                        // }
                  })
              })
         }
