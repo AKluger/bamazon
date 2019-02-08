@@ -30,7 +30,7 @@ function startMenu()    {
         else if (answer.options === "View Low Inventory")
             {lowInventory()}
         else if (answer.options === "Add to Inventory")
-            {}
+            {addInventory()}
         else if (answer.options === "Add New Product")
             {addItem()}
         else  { connection.end();}
@@ -54,19 +54,81 @@ function lowInventory() {
     connection.query("SELECT * FROM products WHERE (stock_quantity < 5)", function (err, res)  {
         if (err) throw err;
         for (var i = 0; i<res.length; i++)
-        {console.log(JSON.stringify(res[i].product_name) +"  Current Inventory: "+JSON.stringify(res[i].stock_quantity))}
+        {console.log(JSON.stringify(res[i].product_name) +"  Current Inventory: "+res[i].stock_quantity)}
+        startMenu();
     })
-    connection.end();
+    // connection.end();
 }
 
 // function to add inventory, get item by id then increase stock_quantity by user input parseInt REPLACE
+function addInventory() {
+    connection.query("SELECT * FROM products", function(err, results) {
+        if (err) throw err;
+        // once you have the items, prompt the user for which they'd like to bid on
+    inquirer.prompt([
 
+        // {
+        //     type: "input",
+        //     name: "id",
+        //     message: "Please enter the item-id of the product you would like to add inventory to:"
+        // },
+        {
+            name: "choice",
+            type: "rawlist",
+            choices: function() {
+              var choiceArray = [];
+              for (var i = 0; i < results.length; i++) {
+                choiceArray.push(results[i].product_name);
+              }
+              return choiceArray;
+            },
+            message: "Please select a product to adjust inventory:"
+          },
+        {
+            type: "input",
+            name: "quantity",
+            message: "How many units would you like to add to inventory?:"
+        }
+    ])
+        .then(function (answer) {
+             // get the information of the chosen item
+        var chosenItem;
+        for (var i = 0; i < results.length; i++) {
+          if (results[i].product_name === answer.choice) {
+            chosenItem = results[i];
+            var newQuantity = (chosenItem.stock_quantity + parseInt(answer.quantity)) 
+          }
+        }
 
+            // connection.query("SELECT * FROM products WHERE ?",
+            // // find the item user has selected and update inventory
+            //     {
+            //         item_id: answer.id
+            //     },
+            //     function (err, res) {
+            //         if (err) throw err;
+            //         var chosenItem = res[0];
+                        connection.query(
+                            "UPDATE products SET ? WHERE ?",
+                            [{ stock_quantity: newQuantity},
 
+                            { product_name: chosenItem.product_name }
+                            ],
+                            function (error) {
+                                if (error) throw err;
+                                console.log("\n Thank you, the inventory has been updated to " + newQuantity)
+                                // startMenu();
+                            }
+                        )
+                        connection.end();
+                    }
+            )
+        })
+}
 
-// function to add a new item, INSERT INTO products
+// function to add a new item
 function addItem() {
-    // prompt for info about the item being put up for auction
+    // prompt for info about the item 
     inquirer
       .prompt([
         {
