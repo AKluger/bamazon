@@ -78,7 +78,7 @@ function addInventory() {
                 name: "quantity",
                 message: "How many units would you like to add to inventory?:",
                 validate: function(value) {
-                    if (isNaN(value) === false) {
+                    if ((isNaN(value) === false) && (value > 0)) {
                       return true;
                     }
                     return false;
