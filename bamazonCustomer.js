@@ -47,15 +47,15 @@ function bamazonShop() {
         {
             type: "input",
             name: "quantity",
-            message: "Please enter a quantity for purchase:"
+            message: "Please enter a quantity for purchase:",
 
             // this validation code does not register
-            // validate: function(value) {
-            //     if (isNAN(value)=== false)  {
-            //         return true;
-            //     }
-            //     return false;
-            // }
+            validate: function(value) {
+                if ((isNaN(value)=== false)&& (value > 0))  {
+                    return true;
+                }
+                return false;
+            }
         }
     ])
         .then(function (answer) {
@@ -73,10 +73,11 @@ function bamazonShop() {
                     if (parseInt(answer.quantity) <= chosenItem.stock_quantity) {
 
                         connection.query(
-                            "UPDATE products SET ? WHERE ?",
-                            [{ stock_quantity: (res[0].stock_quantity - answer.quantity) },
+                            "UPDATE products SET stock_quantity = ?, product_sales = ? WHERE item_id = ?",
+                            [(res[0].stock_quantity - answer.quantity),
+                            (res[0].product_sales + (res[0].price * answer.quantity)),
 
-                            { item_id: answer.id }
+                            answer.id
                             ],
                             function (error) {
                                 if (error) throw err;

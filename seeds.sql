@@ -11,3 +11,19 @@ VALUES ("socks", "apparel", 7.00, 8),
 ("Cardi B Poster", "misc", 10, 20),
 ("Bamazon Echo", "electronics", 59.99, 10000),
 ("Vitamin D Capsules 500/ct", "health", 22.95, 7);
+
+USE bamazon;
+ALTER TABLE products
+ADD COLUMN product_sales DECIMAL(10,2) AFTER stock_quantity;
+
+USE bamazon;
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("apparel", 1280),
+("grocery", "1000"),
+("auto", "16000"),
+("electronics", "4000"),
+("health", "10000"),
+("misc", "7200");
+
+SELECT SUM(price*(quantity purchases)) AS product_sales FROM products GROUP_BY department_name;
+
