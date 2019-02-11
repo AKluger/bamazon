@@ -88,7 +88,8 @@ function bamazonShop() {
                     }
                     
                 
-                    else { console.log("Insufficient quantity ¯|_(ツ)_/¯") }
+                    else { console.log("Insufficient quantity ¯|_(ツ)_/¯") 
+                    connection.end();}
 
                 })
         })
