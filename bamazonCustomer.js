@@ -22,15 +22,12 @@ function showProducts() {
     console.log("\nDisplaying All Products as follows:\nID || Name || Price\n");
     connection.query("SELECT item_id, product_name, price FROM products ", function (err, res) {
         if (err) throw err;
-        for (var i = 0; i<res.length; i++)
-        console.log(JSON.stringify(res[i].item_id) + "  || " + JSON.stringify(res[i].product_name) + " || " + JSON.stringify(res[i].price));
+        for (var i = 0; i < res.length; i++)
+            console.log(JSON.stringify(res[i].item_id) + "  || " + JSON.stringify(res[i].product_name) + " || " + JSON.stringify(res[i].price));
         bamazonShop();
 
 
     });
-
-
-
 }
 
 
@@ -48,10 +45,8 @@ function bamazonShop() {
             type: "input",
             name: "quantity",
             message: "Please enter a quantity for purchase:",
-
-            // this validation code does not register
-            validate: function(value) {
-                if ((isNaN(value)=== false)&& (value > 0))  {
+            validate: function (value) {
+                if ((isNaN(value) === false) && (value > 0)) {
                     return true;
                 }
                 return false;
@@ -62,14 +57,13 @@ function bamazonShop() {
 
 
             connection.query("SELECT * FROM products WHERE ?",
-            // find the item user has selected and compare quantity vs stock
+                // find the item user has selected and compare quantity vs stock
                 {
                     item_id: answer.id
                 },
                 function (err, res) {
                     if (err) throw err;
                     var chosenItem = res[0];
-                    // console.log(chosenItem.stock_quantity);
                     if (parseInt(answer.quantity) <= chosenItem.stock_quantity) {
 
                         connection.query(
@@ -86,10 +80,12 @@ function bamazonShop() {
                         )
                         connection.end();
                     }
-                    
-                
-                    else { console.log("Insufficient quantity ¯|_(ツ)_/¯") 
-                    connection.end();}
+
+
+                    else {
+                        console.log("Insufficient quantity ¯|_(ツ)_/¯")
+                        connection.end();
+                    }
 
                 })
         })

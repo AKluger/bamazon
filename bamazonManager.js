@@ -49,10 +49,9 @@ function lowInventory() {
     console.log("\nDisplaying products with low inventory...");
     connection.query("SELECT * FROM products WHERE (stock_quantity < 5)", function (err, res) {
         if (err) throw err;
-        for (var i = 0; i < res.length; i++) { console.log(JSON.stringify(res[i].product_name) + "  Current Inventory: " + res[i].stock_quantity) }
+        for (var i = 0; i < res.length; i++) { console.log(JSON.stringify(res[i].product_name) + "  Current Inventory: " + res[i].stock_quantity) + "\n" }
         startMenu();
     })
-    // connection.end();
 }
 
 // function to add inventory
@@ -77,12 +76,12 @@ function addInventory() {
                 type: "input",
                 name: "quantity",
                 message: "How many units would you like to add to inventory?:",
-                validate: function(value) {
+                validate: function (value) {
                     if ((isNaN(value) === false) && (value > 0)) {
-                      return true;
+                        return true;
                     }
                     return false;
-                  }
+                }
             }
         ])
             .then(function (answer) {
@@ -94,14 +93,6 @@ function addInventory() {
                         var newQuantity = (chosenItem.stock_quantity + parseInt(answer.quantity))
                     }
                 }
-                // connection.query("SELECT * FROM products WHERE ?",
-                // // find the item user has selected and update inventory
-                //     {
-                //         item_id: answer.id
-                //     },
-                //     function (err, res) {
-                //         if (err) throw err;
-                //         var chosenItem = res[0];
                 connection.query(
                     "UPDATE products SET ? WHERE ?",
                     [{ stock_quantity: newQuantity },

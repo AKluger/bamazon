@@ -44,7 +44,7 @@ function viewSales() {
                 , colWidths: [20, 20, 20, 20, 20]
             });
 
-            for (var i = 0; i < (results.length-1); i++) {
+            for (var i = 0; i < (results.length - 1); i++) {
                 var row = results[i];
                 var sales = res[i].sales;
                 var profit = (sales - row.over_head_costs)
@@ -93,7 +93,7 @@ function createNew() {
                 },
                 function (err) {
                     if (err) throw err;
-                    console.log("Your department has been added to bamazon.");
+                    console.log("Your department has been added to bamazon.\n");
                     // re-prompt manager for a new selection
                     startMenu();
                 }
