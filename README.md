@@ -10,6 +10,7 @@ All of the data lives in a single database, except the total profit column which
 * run the scripts provided in the schema.sql file
 * next run the scripts in the seeds.sql file, feel free to populate the table with items and figures to your liking
 * NOTE: All mySQL scripting can be done in the MySQL Workbench application available here: https://www.mysql.com/downloads/
+* For the app to connect you will need to adjust the user and database password to match your own in each .js file
 
 #### The customer app (bamazonCustomer.js) allows a customer to view products and purchase.   
 
